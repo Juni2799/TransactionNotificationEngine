@@ -1,0 +1,8 @@
+dependencies {
+    implementation project(':common')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring Cloud AWS messaging / SQS starter for Spring Boot 3
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    runtimeOnly 'org.postgresql:postgresql'
+}
