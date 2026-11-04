@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.services.sqs.model.SendAmazonSqsException;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +29,11 @@ public class SqsNotificationProducer {
             );
 
             log.info("Successfully published transactionId: {} to SQS queue", transactionId);
-        } catch (SendAmazonSqsException e) {
+        } catch (AwsServiceException e) {
             log.error("Failed to send message to SQS FIFO for transactionId: {}. Error: {}", transactionId, e.awsErrorDetails().errorMessage());
+            throw new RuntimeException("Failed to enqueue transaction notification", e);
+        } catch (Exception e) {
+            log.error("Unexpected error while sending transactionId: {}. Error: {}", transactionId, e.getMessage());
             throw new RuntimeException("Failed to enqueue transaction notification", e);
         }
     }
