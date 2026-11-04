@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: worker-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/notification_db
+    username: postgres
+    password: secretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  flyway:
+    enabled: false # Flyway is already handled by common/ingestion-service migration run
+
+aws:
+  sqs:
+    queue-name: transaction-notifications.fifo
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    credentials:
+      access-key: test
+      secret-key: test

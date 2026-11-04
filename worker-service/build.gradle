@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // Spring Cloud AWS SQS messaging listener for Spring Boot 3
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs:3.1.0'
+    runtimeOnly 'org.postgresql:postgresql'
+}
