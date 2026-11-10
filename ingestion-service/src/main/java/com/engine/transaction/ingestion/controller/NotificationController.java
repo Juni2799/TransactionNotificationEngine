@@ -51,15 +51,15 @@ public class NotificationController {
                 .updatedAt(OffsetDateTime.now())
                 .build();
 
-        notificationRepository.save(notification);
-        log.info("Saved notification state as PENDING in database for transactionId: {}", request.getTransactionId());
+        TransactionNotification savedNotification = notificationRepository.save(notification);
+        log.info("Saved notification state as PENDING in database for transactionId: {}", savedNotification.getTransactionId());
 
         // 3. Push event asynchronously to SQS FIFO
-        sqsProducer.sendNotificationEvent(request, request.getAccountId(), request.getTransactionId());
+        sqsProducer.sendNotificationEvent(savedNotification, savedNotification.getAccountId(), savedNotification.getTransactionId());
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of(
                 "status", "ACCEPTED",
-                "transactionId", request.getTransactionId(),
+                "transactionId", savedNotification.getTransactionId(),
                 "message", "Transaction notification accepted and queued for processing"
         ));
     }

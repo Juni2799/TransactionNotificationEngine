@@ -21,8 +21,9 @@ public class NotificationWorkerService {
 
     @SqsListener("${aws.sqs.queue-name}")
     @Transactional
-    public void processNotification(Map<String, Object> payload, @Header(required = false, value = "SqsReceiptHandle") String receiptHandle) {
-        String transactionId = (String) payload.get("transactionId");
+    public void processNotification(Object payload, @Header(required = false, value = "SqsReceiptHandle") String receiptHandle) {
+        //String transactionId = (String) payload.get("transactionId");
+        String transactionId = ((TransactionNotification) payload).getTransactionId();
         log.info("Worker received SQS message for transactionId: {}", transactionId);
 
         // 1. Fetch record from database

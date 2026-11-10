@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 
 spring:
   application:
@@ -19,16 +19,16 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  cloud:
+    aws:
+      endpoint: http://localhost:4566
+      region:
+        static: us-east-1
+      credentials:
+        access-key: test
+        secret-key: test
 
 aws:
   sqs:
     endpoint: http://localhost:4566 # LocalStack endpoint
     queue-url: http://localhost:4566/000000000000/transaction-notifications.fifo
-
-cloud:
-  aws:
-    region:
-      static: us-east-1
-    credentials:
-      access-key: test
-      secret-key: test

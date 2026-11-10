@@ -3,7 +3,9 @@ package com.engine.transaction.common.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -42,6 +44,7 @@ public class TransactionNotification {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "notification_status")
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM) // For Hibernate 6+ to correctly map Java Enums to PostgreSQL custom ENUMs
     @Builder.Default
     private NotificationStatus status = NotificationStatus.PENDING;
 

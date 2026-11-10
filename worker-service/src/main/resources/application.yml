@@ -17,7 +17,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   flyway:
-    enabled: false
+    enabled: true
+    locations: classpath:db/migration
+  cloud:
+    aws:
+      endpoint: http://localhost:4566
+      region:
+        static: us-east-1
+      credentials:
+        access-key: test
+        secret-key: test
 
 aws:
   sqs:
@@ -28,11 +37,3 @@ aws:
 archival:
   retention-days: 30 # Archive terminal records older than 30 days
   cron-expression: "0 0 2 * * ?" # Run daily at 2:00 AM (or can be set to run more frequently for testing)
-
-cloud:
-  aws:
-    region:
-      static: us-east-1
-    credentials:
-      access-key: test
-      secret-key: test
