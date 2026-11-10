@@ -2,6 +2,15 @@ plugins {
     id 'java-library'
 }
 
+// Disable Spring Boot executable jar packaging for the shared library module
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql'

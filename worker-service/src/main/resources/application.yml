@@ -17,11 +17,17 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   flyway:
-    enabled: false # Flyway is already handled by common/ingestion-service migration run
+    enabled: false
 
 aws:
   sqs:
     queue-name: transaction-notifications.fifo
+  s3:
+    archival-bucket: transaction-archives-bucket
+
+archival:
+  retention-days: 30 # Archive terminal records older than 30 days
+  cron-expression: "0 0 2 * * ?" # Run daily at 2:00 AM (or can be set to run more frequently for testing)
 
 cloud:
   aws:
